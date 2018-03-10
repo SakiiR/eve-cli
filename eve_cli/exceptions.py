@@ -3,7 +3,7 @@
 
 class EveException(Exception):
 
-    """ Exception thrown when a resource or an item is not found """
+    """ Exception thrown when eve return an error """
 
     def __init__(self, message, errors=[]):
 
@@ -24,7 +24,7 @@ class BadRequestException(EveException):
 
 
 def _handle_400(response, json):
-    raise BadRequestException(json.get("_error", {}).get("message", "Notfound"))
+    raise BadRequestException(json.get("_error", {}).get("message", "Bad Request"))
 
 
 def _handle_404(response, json):
@@ -40,8 +40,9 @@ def exception_handler(response, json):
     """ Handle Eve response exceptions """
 
     errors = {
-        404: _handle_404,
+        400: _handle_400,
         401: _handle_401,
+        404: _handle_404,
     }
     if response.status_code in errors:
         errors[response.status_code](response, json)
