@@ -162,10 +162,8 @@ class Resource(object):
                 >>> # ok
         """
 
-        headers = {
-            **self._headers,
-            **{'If-Match': _etag}
-        }
+        headers = self._headers.copy()
+        headers['If-Match'] = _etag
         try:
             r = requests.delete(self._url + "/{}/{}".format(self._resource_name,
                                                             _id
@@ -192,10 +190,8 @@ class Resource(object):
                 >>> # ok
         """
 
-        headers = {
-            **self._headers,
-            **{'If-Match': _etag}
-        }
+        headers = self._headers.copy()
+        headers['If-Match'] = _etag
         try:
             r = requests.patch(self._url + "/{}/{}".format(self._resource_name,
                                                            _id
@@ -230,10 +226,8 @@ class EveIterator:
 
     def __init__(self, client, resource_name, url="http://localhost/", max_results=25, params={}, headers={}):
 
-        params = {
-            **params,
-            'max_results': max_results
-        }
+        params = params.copy()
+        params['max_results'] = max_results
         self._client = client
         self._max_results = max_results
         self._params = params
@@ -247,10 +241,8 @@ class EveIterator:
 
         """ Fill the queue with max_results item """
 
-        params = {
-            **self._params,
-            'page': self._page
-        }
+        params = self._params.copy()
+        params['page'] = self._page
         try:
             r = requests.get(self._url + _parse_params(params), headers=self._headers)
         except requests.exceptions.RequestException as e:
