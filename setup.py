@@ -4,7 +4,7 @@
 from setuptools import setup
 
 setup(name='eve_cli',
-      version='0.0.1',
+      version='0.0.2',
       description='CLI utility to manage an EVE API',
       url='http://github.com/SakiiR/eve-cli',
       author='SakiiR',
